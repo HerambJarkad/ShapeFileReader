@@ -72,7 +72,7 @@ with col2:
                     gdf['data']=0
                     original_geometry = gdf.geometry
                 original_crs = gdf.crs
-
+                title_map = st.text_input("Enter the title of the map")
                 # Use st.data_editor for user interaction
                 edited_data = st.data_editor(
                     gdf[[column_t1, 'data']],
@@ -131,7 +131,7 @@ with col1:
 
                 # Now you can annotate the map
                 fig, ax = plt.subplots(figsize=(10, 8))
-                gdf.plot(ax=ax, color=gdf['color'], edgecolor='black',)
+                gdf.plot(ax=ax, color=gdf['color'], edgecolor='black')
                 gdf.apply(lambda x: ax.annotate(
                     text=f"{x['district']}\n{x['data']}%",  # Print only the name
                     xy=(x['centroid_x'], x['centroid_y']),
@@ -148,6 +148,7 @@ with col1:
                 # ax.set_xlabel('')
                 ax.set_xticks([])
                 ax.set_yticks([])
+                ax.set_title(title_map,fontsize=16, weight='bold')
                 st.pyplot(fig)
                 plt.savefig("Map.jpg",dpi=500)
                 # st.rerun()

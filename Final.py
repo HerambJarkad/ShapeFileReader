@@ -133,7 +133,7 @@ with col1:
                 fig, ax = plt.subplots(figsize=(10, 8))
                 gdf.plot(ax=ax, color=gdf['color'], edgecolor='black')
                 gdf.apply(lambda x: ax.annotate(
-                    text=f"{x['district']}\n{x['data']}%",  # Print only the name
+                    text=f"{x[column_t1]}\n{x['data']}%",  # Print only the name
                     xy=(x['centroid_x'], x['centroid_y']),
                     ha='center', size=8), axis=1)
                 legend_elements = [

@@ -162,7 +162,7 @@ with col1:
         display_gdf['centroid'] = display_gdf.geometry.centroid
         
         # Create the map
-        fig, ax = plt.subplots(figsize=(10, 8))
+        fig, ax = plt.subplots(figsize=(12, 12))  # Adjust figure size for better resolution
         display_gdf.plot(ax=ax, color=display_gdf['color'], edgecolor='black')
         
         # Add annotations
@@ -185,15 +185,19 @@ with col1:
             Patch(facecolor='yellow', edgecolor='black', label=f'{green} - {yellow}%'),
             Patch(facecolor='orange', edgecolor='black', label=f'{yellow} - {orange}%'),
             Patch(facecolor='red', edgecolor='black', label=f'{orange} - {red}%'),
-            Patch(facecolor='gray', edgecolor='black', label=f'≥ {red}%')
+            Patch(facecolor='gray', edgecolor='black', label=f'Other')
         ]
         ax.legend(handles=legend_elements, title='Percentage', loc='lower right', fontsize=10)
+        
+        # Save the map at high resolution (scaled to fit 2048x2048 square)
+        fig_width, fig_height = fig.get_size_inches()
+        dpi = max(2048 / (fig_width * 100), 2048 / (fig_height * 100)) * 100  # Scale DPI for 2048px output
+        plt.savefig("high_res_map.jpg", dpi=dpi, bbox_inches='tight')  # Save with adjusted DPI
         
         # Display the map
         st.pyplot(fig)
         
-        # Save map for analysis
-        plt.savefig("map.jpg", dpi=500, bbox_inches='tight')
+        # Close the plot to free memory
         plt.close()
         
         # Analysis section
@@ -210,7 +214,7 @@ Consider geographic clusters, regional patterns, and potential correlations betw
         if st.button("Analyze Map"):
             with st.spinner("Analyzing map data..."):
                 try:
-                    analysis_result = analyze_image_with_gpt(analysis_prompt, "map.jpg")
+                    analysis_result = analyze_image_with_gpt(analysis_prompt, "high_res_map.jpg")
                     st.write("Analysis Results:")
                     st.write(analysis_result)
                 except Exception as e:

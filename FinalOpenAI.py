@@ -220,3 +220,8 @@ Consider geographic clusters, regional patterns, and potential correlations betw
                 except Exception as e:
                     st.error(f"Error during analysis: {str(e)}")
                     st.info("Please ensure your OpenAI API key has access to GPT-4 Vision API")
+
+
+
+
+# It costs around 
